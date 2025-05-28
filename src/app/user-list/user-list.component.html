@@ -1,0 +1,9 @@
+<p>user-list works!</p>
+
+<h2>User List</h2>
+<ul>
+  <li *ngFor="let user of users" (click)="goToUser(user.id)" style="cursor: pointer;">
+    {{ user.first_name }} {{ user.last_name }}
+  </li>
+</ul>
+
