@@ -1,0 +1,87 @@
+<header class="header">
+  <h1>Remo Menu</h1>
+  <div id="headerbuttons">
+ <!-- Show when NOT logged in -->
+<button *ngIf="!isLoggedIn" routerLink="/login" id="login-button">Log In</button>
+
+<!-- Show when logged in -->
+<button *ngIf="isLoggedIn" (click)="logout()" id="logout-button">Log Out</button>
+
+
+    <button routerLink="/cart" id="cart-button">Go to Cart</button>
+
+
+  </div>
+</header>
+
+<!-- Popup -->
+<div class="popup" *ngIf="showPopupFlag">{{ popupMessage }}</div>
+
+<!-- Filter Section -->
+<div id="filtersection">
+  <div id="filter-form">
+    <!-- Search -->
+    <input type="text" [(ngModel)]="searchText" placeholder="Search for dishes...">
+    <!-- Min/Max Price -->
+    <input type="number" [(ngModel)]="minPrice" placeholder="Min Price" min="0">
+    <input type="number" [(ngModel)]="maxPrice" placeholder="Max Price" min="0">
+    <!-- Search Button -->
+    <button (click)="applyFilters()" id="filterButton">Search</button>
+
+    <!-- Reset Button -->
+<button (click)="resetFilters()" id="resetButton">Reset Filters</button>
+
+
+   
+    <div id="filter-form2">
+      <!-- Category -->
+      <select [(ngModel)]="selectedCategory" (change)="applyFilters()">
+        <option value="">All Categories</option>
+        <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</option>
+      </select>
+
+      <!-- Spiciness -->
+      <select [(ngModel)]="selectedSpiciness" (change)="applyFilters()">
+        <option value="">All Spiciness</option>
+        <option value="0">0 - Not spicy</option>
+        <option value="1">1 - Mild</option>
+        <option value="2">2 - Medium</option>
+        <option value="3">3 - Hot</option>
+        <option value="4">4 - Very Hot</option>
+      </select>
+</div>
+      <!-- Checkboxes -->
+      <div id="checkboxes">
+        <label>
+          <input type="checkbox" [(ngModel)]="vegetarian" (change)="applyFilters()"> Vegetarian
+        </label>
+        <label>
+          <input type="checkbox" [(ngModel)]="nuts" (change)="applyFilters()"> Contains nuts
+        </label>
+      </div>
+    
+  
+</div>
+
+
+<!-- Products -->
+<div id="products-container">
+  <div class="dish" *ngFor="let dish of products">
+    <img [src]="dish.image" alt="{{ dish.name }}" style="width:200px;height:auto;">
+    <h3>{{ dish.name }}</h3>
+    <p>Price: ${{ dish.price }}</p>
+    <p>Spiciness: {{ dish.spiciness }}</p>
+    <p>{{ dish.vegeterian ? 'Vegetarian' : 'Non-Vegetarian' }}</p>
+    <p>{{ dish.nuts ? 'Contains Nuts' : 'No Nuts' }}</p>
+    <button (click)="addToCart(dish)">Add to Cart</button>
+  </div>
+</div>
+
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>&copy; 2025 Remo Menu. All rights reserved.</p>
+</footer>
+
+

@@ -22,9 +22,7 @@ body {
   font-size: 28px;
 }
 
-
-
-#headerbuttons button {
+#menu-button {
   background-color: white;
   color: #ff7043;
   border: none;
@@ -36,6 +34,39 @@ body {
   transition: background-color 0.3s ease;
 }
 
-#headerbuttons button:hover {
+#menu-button:hover {
   background-color: #ffe0d1;
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 270px;
+  margin: 0 auto;
+}
+
+input {
+  margin: 8px 0;
+  padding: 10px;
+}
+
+button {
+  padding: 10px;
+  background-color: #ff7043;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #e63a06;
+}
+
+p {
+  text-align: center;
+  margin-top: 10px;
+}
+
+
+
+

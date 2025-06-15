@@ -1,0 +1,37 @@
+<header class="header">
+  <h2>Your Cart 🛒</h2>
+
+  <button routerLink="/menu" id="menu-button">Back to Menu</button>
+</header>
+
+
+
+<div *ngIf="loading">Loading cart...</div>
+<div *ngIf="!loading && groupedItems.length === 0" id="emptycart">Your cart is empty 💤</div>
+
+<div *ngIf="!loading && groupedItems.length > 0">
+  <div *ngFor="let item of groupedItems" class="cart-item">
+    <p><strong>{{ item.product.name }}</strong> x{{ item.quantity }}</p>
+    <p>Price: ${{ item.product.price }} each</p>
+    <p>Subtotal: ${{ item.product.price * item.quantity }}</p>
+    <button (click)="increaseQuantity(item.product.id)">+</button>
+    <button (click)="decreaseQuantity(item.product.id)">-</button>
+  </div>
+
+  <h3>Total: ${{ total }}</h3>
+
+  <form #checkoutForm="ngForm" (ngSubmit)="submitOrder(checkoutForm)">
+    <input type="text" name="address" placeholder="Address" ngModel required>
+    <input type="text" name="apartment" placeholder="Apartment" ngModel required>
+    <input type="text" name="cardholder" placeholder="Cardholder Name" ngModel required>
+    <input type="text" name="card" placeholder="Card Number" ngModel required>
+    <input type="text" name="expiration" placeholder="Expiration Date" ngModel required>
+    <input type="text" name="cvc" placeholder="CVC" ngModel required>
+    <button type="submit">Submit Order</button>
+  </form>
+</div>
+
+<div *ngIf="showConfirmation" class="confirmation">
+  <p>Your order has been placed. Thank you!</p>
+</div>
+
