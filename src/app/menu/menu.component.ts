@@ -20,6 +20,7 @@ import { AuthService } from '../auth/auth.service';
 
 
 export class MenuComponent implements OnInit {
+  [x: string]: any;
 
 
 
@@ -41,8 +42,11 @@ export class MenuComponent implements OnInit {
   selectedSpiciness = '';
   vegetarian = false;
   nuts = false;
-  auth: any;
-  router: any;
+  token: string | null = null;
+
+  // auth: any;
+  // router: any;
+  // token!: string | null;
 
   resetFilters() {
   this.searchText = '';
@@ -57,6 +61,9 @@ export class MenuComponent implements OnInit {
 
 
   constructor(private http: HttpClient,
+     
+ 
+  private router: Router,
     public authService: AuthService  ) {}
 
 
@@ -64,29 +71,45 @@ export class MenuComponent implements OnInit {
 // get isLoggedIn(): boolean {
 //   return typeof window !== 'undefined' && !!localStorage.getItem('token');
 // }
+get isLoggedIn(): boolean {
+  return this.authService.isAuthenticated();
+}
 
 
 
- get isLoggedIn(): boolean {
+//  get isLoggedIn(): boolean {
 
   
-    return this.authService.isAuthenticated();
-  }
+//     return this.authService.isAuthenticated();
+
+//     return typeof window !== 'undefined' && !!localStorage.getItem('token');
+//   }
+  
 
   ngOnInit(): void {
+
+    
     
     this.loadCategories();
     this.applyFilters();
 
    // If already logged in (e.g., page reload)
-   if (this.authService.isAuthenticated()) {
+//    if (this.authService.isAuthenticated()) {
     
-      this.loadCategories();
-      this.applyFilters();
-    }
-
+//       this.loadCategories();
+//       this.applyFilters();
+//     }
+// if (typeof window !== 'undefined') {
+//     this.token = localStorage.getItem('token');
+//   }
   
+//   }
+
+
+  if (this.authService.isAuthenticated() && typeof window !== 'undefined') {
+    this.token = localStorage.getItem('access_token');
   }
+}
 
 
   loadCategories() {
@@ -177,10 +200,15 @@ applyFilters() {
   }
 
   
+  // logout(): void {
+  //   this.authService.logOut();
+  //   this.router.navigate(['/menu']);
+  // }
+
   logout(): void {
-    this.authService.logOut();
-    this.router.navigate(['/menu']);
-  }
+  this.authService.logOut();
+  this.router.navigate(['/menu']);
+}
 
 
 

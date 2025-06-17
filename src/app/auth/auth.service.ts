@@ -1,26 +1,33 @@
 
-
 // import { Injectable } from "@angular/core";
-// import { IAuthService } from "./auth-service.interface";
+// import { BehaviorSubject } from 'rxjs';
 
-// @Injectable( {
-// providedIn: "root"
-// }
-// )
-// export class AuthService implements IAuthService{
-//     isAutenticated(): boolean {
-       
-//     console.log(!!localStorage.getItem("access_token"), "asdasd")
-// return !!localStorage.getItem("access_token")
-//     }
+// @Injectable({
+//   providedIn: "root"
+// })
+// export class AuthService {
+//   private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
 
-//      isLoggedIn(): boolean {
-//     return !!localStorage.getItem('token'); // adjust key as needed
+//   loginStatus$ = this.loggedIn.asObservable();
+
+//   private hasToken(): boolean {
+//     return !!localStorage.getItem("access_token");
+//   }
+  
+
+//   isAuthenticated(): boolean {
+//     return this.hasToken();
 //   }
 
-//    logOut(): void {
-//     localStorage.removeItem('token');
+//   logOut(): void {
+//     localStorage.removeItem('access_token');
+//     this.loggedIn.next(false);
 //   }
+
+//   setLoggedIn(): void {
+//     this.loggedIn.next(true);
+//   }
+
 
 // }
 
@@ -38,7 +45,7 @@ export class AuthService {
   loginStatus$ = this.loggedIn.asObservable();
 
   private hasToken(): boolean {
-    return !!localStorage.getItem("access_token");
+    return typeof window !== 'undefined' && !!localStorage.getItem("access_token");
   }
 
   isAuthenticated(): boolean {
@@ -46,7 +53,9 @@ export class AuthService {
   }
 
   logOut(): void {
-    localStorage.removeItem('access_token');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('access_token');
+    }
     this.loggedIn.next(false);
   }
 
@@ -54,6 +63,3 @@ export class AuthService {
     this.loggedIn.next(true);
   }
 }
-
-
-
